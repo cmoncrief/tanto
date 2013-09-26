@@ -72,7 +72,8 @@ class Tanto
         continue
 
       if value.length isnt 0
-        @data.values[key] = @getValue value, val
+        @setKey key, @getValue(value, val)
+        #@data.values[key] = @getValue value, val
       else
         @addSchemaError key, new Error "Value not found"
 
@@ -98,6 +99,18 @@ class Tanto
     data = opts.transform(data, @data.values) if opts.transform?
     data
     
+  # Set the value, expanding the destination object as needed
+  
+  setKey: (key, val) ->
+    base = @data.values
+    levels = key.split '.'
+  
+    for level in levels
+      last = base
+      base = base[level] = base[level] or {}
+
+    last[levels[levels.length - 1]] = val
+
   # Add an error to the outgoing hash
 
   addSchemaError: (key, error) ->

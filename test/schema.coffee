@@ -9,28 +9,28 @@ describe 'Schema', ->
     schema =  title: 'title'
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert data.values 
-      assert.equal data.values .title, 'npm'
+      assert.equal data.values.title, 'npm'
       done()
 
   it 'should return return a populated value from an object', (done) ->
     schema = {title: {selector: 'title', type: 'text'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert data.values 
-      assert.equal data.values .title, 'npm'
+      assert.equal data.values.title, 'npm'
       done()
 
   it 'should select HTML when specified', (done) ->
     schema = {home: {selector: 'li.home', type: 'html'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert data.values 
-      assert.equal data.values .home, '<a href="http://nodejs.org/">Node.js Home</a>'
+      assert.equal data.values.home, '<a href="http://nodejs.org/">Node.js Home</a>'
       done()
     
   it 'should select text when specified', (done) ->
     schema = {home: {selector: 'li.home', type: 'text'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert data.values 
-      assert.equal data.values .home, 'Node.js Home'
+      assert.equal data.values.home, 'Node.js Home'
       done()
 
   it 'should run transformations on values', (done) ->
@@ -58,27 +58,33 @@ describe 'Schema', ->
       data
     schema = {title: {selector: 'title', type: 'text', transform: contextTransform}}
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert data.values .test, '123456'
+      assert data.values.test, '123456'
       done()
 
   it 'should modify a passed in context', (done) ->
     context = {test: 'octopus'}
     schema = {title: {selector: 'title', type: 'text'}}
     tanto {url: testSite, schema: schema, context: context}, (err, data) ->
-      assert.equal data.values .test, 'octopus'
+      assert.equal data.values.test, 'octopus'
       done()
 
   it 'should select the first element only', (done) ->
     schema = {test: {selector: 'li', type: 'text', eq: 0}}
 
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert.equal data.values .test, 'Node.js Home'
+      assert.equal data.values.test, 'Node.js Home'
       done()
 
   it 'should default schema types to text', (done) ->
     schema = {test: {selector: 'title'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert.equal data.values .test, "npm"
+      assert.equal data.values.test, "npm"
+      done()
+
+  it 'should expand dot notation schema keys', (done) ->
+    schema = {'test.nested.subnested' : {selector: 'title'}}
+    tanto {url: testSite, schema: schema}, (err, data) ->
+      assert.equal data.values.test.nested.subnested, "npm"
       done()
 
 

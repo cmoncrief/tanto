@@ -1,6 +1,6 @@
 {
   "name": "tanto",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Charles Moncrief",
   "description": "Lightweight web scraping library",
   "main": "lib/tanto.js",
