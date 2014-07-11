@@ -1,6 +1,6 @@
 {
   "name": "tanto",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Charles Moncrief",
   "description": "Lightweight web scraping library",
   "main": "lib/tanto.js",
@@ -8,8 +8,8 @@
     "test": "test"
   },
   "dependencies": {
-    "cheerio": "~0.12.1",
-    "request": "~2.25.0"
+    "cheerio": "^0.17.0",
+    "request": "^2.37.0"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3",
@@ -19,7 +19,7 @@
     "prepublish": "cake build",
     "test": "cake test"
   },
-    "keywords": [
+  "keywords": [
     "scrape",
     "jquery",
     "data",

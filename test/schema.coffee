@@ -8,48 +8,48 @@ describe 'Schema', ->
   it 'should return a populated value from a string', (done) ->
     schema =  title: 'title'
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert data.values 
+      assert data.values
       assert.equal data.values.title, 'npm'
       done()
 
   it 'should return return a populated value from an object', (done) ->
     schema = {title: {selector: 'title', type: 'text'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert data.values 
+      assert data.values
       assert.equal data.values.title, 'npm'
       done()
 
   it 'should select HTML when specified', (done) ->
-    schema = {home: {selector: 'li.home', type: 'html'}}
+    schema = {home: {selector: 'li.npm', type: 'html'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert data.values 
-      assert.equal data.values.home, '<a href="http://nodejs.org/">Node.js Home</a>'
+      assert data.values
+      assert.equal data.values.home, '<a href="/">Home</a>'
       done()
-    
+
   it 'should select text when specified', (done) ->
-    schema = {home: {selector: 'li.home', type: 'text'}}
+    schema = {home: {selector: 'li.npm', type: 'text'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert data.values 
-      assert.equal data.values.home, 'Node.js Home'
+      assert data.values
+      assert.equal data.values.home, 'Home'
       done()
 
   it 'should run transformations on values', (done) ->
     upperTransform = (data) -> data.toUpperCase()
-    schema = {home: {selector: 'li.home', type: 'text', transform: upperTransform}}
+    schema = {home: {selector: 'li.npm', type: 'text', transform: upperTransform}}
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert data.values 
-      assert.equal data.values.home, 'NODE.JS HOME'
+      assert data.values
+      assert.equal data.values.home, 'HOME'
       done()
 
   it 'should return an error hash', (done) ->
     schema = squid: 'div.li.squid', octopus: ':octopus.eleventy', title: 'title'
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert data.values 
+      assert data.values
       assert data.errors
       assert.equal Object.keys(data.values).length, 1
       assert.equal Object.keys(data.errors).length, 2
       assert.equal data.errors.squid.message, "Value not found"
-      assert.equal data.errors.octopus.message, "unmatched pseudo-class: octopus"
+      assert.equal data.errors.octopus.message, "unmatched pseudo-class :octopus"
       done()
 
   it 'should allow altering the context within a transform', (done) ->
@@ -72,7 +72,7 @@ describe 'Schema', ->
     schema = {test: {selector: 'li', type: 'text', eq: 0}}
 
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert.equal data.values.test, 'Node.js Home'
+      assert.equal data.values.test, 'Home'
       done()
 
   it 'should default schema types to text', (done) ->
@@ -86,8 +86,3 @@ describe 'Schema', ->
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert.equal data.values.test.nested.subnested, "npm"
       done()
-
-
-
-
-
