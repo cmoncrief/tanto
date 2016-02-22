@@ -18,7 +18,7 @@ Install via npm:
 
 At it's simplest, Tantō takes a URL and returns a hash containing the body
 of the response and the `$` object, which allows extracting data out of the response with all of the jQuery syntax available in the [cheerio module](https://npmjs.org/package/cheerio)
-    
+
     var tanto = require('tanto');
 
     tanto("http://www.npmjs.org", function(err, data) {
@@ -38,7 +38,7 @@ Tantō also accepts an options hash in place of the URL string, and all [request
     };
 
     tanto(options, function(err, data) {
-      console.log(data.$('title').text()); 
+      console.log(data.$('title').text());
     });
 
 ## Schemas
@@ -123,7 +123,7 @@ Schema definitions support the following options:
 ### Transform functions
 
 Transformation functions take `data` and `context` as parameters and return
-the new value. Use the `context` parameter to alter or create other keys in the returned values. 
+the new value. Use the `context` parameter to alter or create other keys in the returned values.
 
 The following is an example of a transform function that sets the scraped name
 value to all lowercase and also saves an uppercase copy in a new key.
@@ -153,7 +153,7 @@ Note that the tests will generate several requests to the NPM website.
 
 ## License
 
-(The MIT License)
+(The ISC License)
 
 Copyright (c) 2013 Charles Moncrief <<cmoncrief@gmail.com>>
 
