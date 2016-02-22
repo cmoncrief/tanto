@@ -20,25 +20,25 @@ describe 'Schema', ->
       done()
 
   it 'should select HTML when specified', (done) ->
-    schema = {home: {selector: 'li.npm', type: 'html'}}
+    schema = {home: {selector: '#explicit', type: 'html'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert data.values
-      assert.equal data.values.home, '<a href="/">Home</a>'
+      assert.equal data.values.home, "<a href=\"#explicit\">packages people &apos;npm install&apos; a lot</a>"
       done()
 
   it 'should select text when specified', (done) ->
-    schema = {home: {selector: 'li.npm', type: 'text'}}
+    schema = {home: {selector: '#explicit', type: 'text'}}
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert data.values
-      assert.equal data.values.home, 'Home'
+      assert.equal data.values.home, "packages people 'npm install' a lot"
       done()
 
   it 'should run transformations on values', (done) ->
     upperTransform = (data) -> data.toUpperCase()
-    schema = {home: {selector: 'li.npm', type: 'text', transform: upperTransform}}
+    schema = {home: {selector: '#explicit', type: 'text', transform: upperTransform}}
     tanto {url: testSite, schema: schema}, (err, data) ->
       assert data.values
-      assert.equal data.values.home, 'HOME'
+      assert.equal data.values.home, "PACKAGES PEOPLE 'NPM INSTALL' A LOT"
       done()
 
   it 'should return an error hash', (done) ->
@@ -72,7 +72,7 @@ describe 'Schema', ->
     schema = {test: {selector: 'li', type: 'text', eq: 0}}
 
     tanto {url: testSite, schema: schema}, (err, data) ->
-      assert.equal data.values.test, 'Home'
+      assert.equal data.values.test, 'sign up or log in'
       done()
 
   it 'should default schema types to text', (done) ->
